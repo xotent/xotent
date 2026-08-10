@@ -7,72 +7,81 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
   <style>
-        :root {
-            --bg-primary: #0a0a0b;
-            --bg-secondary: #111113;
-            --bg-card: #161618;
-            --bg-card-hover: #1c1c1f;
-            --border: #222225;
-            --border-light: #2a2a2e;
-            --text-primary: #f0f0f2;
-            --text-secondary: #8a8a95;
-            --text-muted: #5a5a65;
-            --accent: #6366f1;
-            --accent-hover: #818cf8;
-            --accent-glow: rgba(99, 102, 241, 0.15);
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; }
+    :root {
+      --bg-primary: #0a0a0b;
+      --bg-secondary: #111113;
+      --bg-card: #161618;
+      --bg-card-hover: #1c1c1f;
+      --border: #222225;
+      --border-light: #2a2a2e;
+      --text-primary: #f0f0f2;
+      --text-secondary: #8a8a95;
+      --text-muted: #5a5a65;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --accent-glow: rgba(99, 102, 241, 0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; }
 
-        .nav-blur { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(10,10,11,0.8); }
-        .hero-heading { font-size: clamp(2.8rem, 8vw, 6.5rem); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800; }
-        .hero-sub { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.01em; }
+    .nav-blur { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); background: rgba(10,10,11,0.8); }
+    .hero-heading { font-size: clamp(2.8rem, 8vw, 6.5rem); line-height: 1.05; letter-spacing: -0.03em; font-weight: 800; }
+    .hero-sub { font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 600; letter-spacing: -0.01em; }
 
-        .glass-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; transition: all 0.3s ease; }
-        .glass-card:hover { background: var(--bg-card-hover); border-color: var(--border-light); transform: translateY(-4px); }
+    .glass-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; transition: all 0.3s ease; }
+    .glass-card:hover { background: var(--bg-card-hover); border-color: var(--border-light); transform: translateY(-4px); }
 
-        .btn-primary { background: var(--accent); color: #fff; padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; border: none; cursor: pointer; }
-        .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-2px); }
-        .btn-secondary { color: var(--text-secondary); padding: 14px 28px; border-radius: 10px; font-weight: 500; font-size: 0.95rem; border: 1px solid var(--border); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; background: transparent; }
-        .btn-secondary:hover { border-color: var(--text-secondary); color: var(--text-primary); }
+    .btn-primary { background: var(--accent); color: #fff; padding: 14px 28px; border-radius: 10px; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--accent-hover); box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-2px); }
+    .btn-secondary { color: var(--text-secondary); padding: 14px 28px; border-radius: 10px; font-weight: 500; font-size: 0.95rem; border: 1px solid var(--border); transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; cursor: pointer; background: transparent; }
+    .btn-secondary:hover { border-color: var(--text-secondary); color: var(--text-primary); }
 
-        .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-        .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-        .floating { animation: float 6s ease-in-out infinite; }
-        .floating-delay { animation: float 6s ease-in-out infinite; animation-delay: -3s; }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+    .floating { animation: float 6s ease-in-out infinite; }
+    .floating-delay { animation: float 6s ease-in-out infinite; animation-delay: -3s; }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
 
-        .hero-reveal { animation: revealUp 1s ease forwards; opacity: 0; }
-        .hero-reveal-d1 { animation-delay: 0.1s; }
-        .hero-reveal-d2 { animation-delay: 0.3s; }
-        .hero-reveal-d3 { animation-delay: 0.5s; }
-        .hero-reveal-d4 { animation-delay: 0.7s; }
-        @keyframes revealUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-reveal { animation: revealUp 1s ease forwards; opacity: 0; }
+    .hero-reveal-d1 { animation-delay: 0.1s; }
+    .hero-reveal-d2 { animation-delay: 0.3s; }
+    .hero-reveal-d3 { animation-delay: 0.5s; }
+    .hero-reveal-d4 { animation-delay: 0.7s; }
+    @keyframes revealUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
 
-        .project-img { aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; width: 100%; }
-        .service-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--accent-glow); color: var(--accent); }
+    .project-img { aspect-ratio: 16/10; object-fit: cover; border-radius: 12px; width: 100%; }
+    .service-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: var(--accent-glow); color: var(--accent); }
 
-        .mobile-nav { position: fixed; inset: 0; background: var(--bg-primary); z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
-        .mobile-nav.open { opacity: 1; pointer-events: all; }
-        .mobile-nav a { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); text-decoration: none; }
+    .mobile-nav { position: fixed; inset: 0; background: var(--bg-primary); z-index: 90; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+    .mobile-nav a { font-size: 1.5rem; font-weight: 600; color: var(--text-primary); text-decoration: none; }
 
-        .gradient-text { background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gradient-text { background: linear-gradient(135deg, var(--accent), #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-        .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); font-weight: 600; }
-    </style>
+    .section-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); font-weight: 600; }
+
+    .step-number { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--accent-glow); color: var(--accent); font-weight: 700; font-size: 0.9rem; flex-shrink: 0; }
+
+    .form-input { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; color: var(--text-primary); font-family: inherit; font-size: 0.95rem; width: 100%; transition: border-color 0.3s ease; }
+    .form-input:focus { outline: none; border-color: var(--accent); }
+    .form-input::placeholder { color: var(--text-muted); }
+
+    .footer-link { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+    .footer-link:hover { color: var(--text-primary); }
+  </style>
   <script src="/_sdk/0e8d3a91e1c6f495.data_sdk.js" type="text/javascript" integrity="sha512-c00oDoGjsMgluCLLEyVl3suwEkgjOGGplVFbsilUoBg4aMKNmsL3mwsc9r0dPn95qiSZyjBousQXgROkAW7p/w=="></script>
   <script src="/_sdk/04cc6185e046f597.resizing_sdk.js" type="text/javascript" integrity="sha512-CiE/G92aQF0nxneFg1kdOvXih8sQ1Z2a2QI3+r/WvzJwQqH6+IyB3iL07OkJmpm3ABAaf07+FnqWny98f5sR6w=="></script>
  </head>
  <body data-template-id="__page-root" class="w-full" style="background: rgb(10, 10, 11);"><!-- Navigation -->
   <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-transparent transition-all duration-300" style="border-color: transparent;">
    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between"><a href="#" data-template-id="nav-logo" class="canva-text text-lg font-bold tracking-tight" style="color: rgb(240, 240, 242); font-weight: 700; font-style: normal; font-size: 16px;">TECH KID</a>
-    <div class="hidden md:flex items-center gap-8"><a href="#work" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Work</a> <a href="#services" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Services</a> <a href="#about" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">About</a> <a href="#lab" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Lab</a> <a href="#contact" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Contact</a>
-    </div><a href="#contact" data-template-id="nav-cta" class="canva-button hidden md:inline-flex btn-primary !py-2.5 !px-5 !text-sm" style="background: rgb(99, 102, 241); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Start a Project</a> <button id="menu-toggle" class="md:hidden text-[var(--text-primary)]" aria-label="Toggle menu"> <i data-lucide="menu" style="width:24px;height:24px;"></i> </button>
+    <div class="hidden md:flex items-center gap-8"><a href="#work" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Work</a> <a href="#services" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Services</a> <a href="#about" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">About</a> <a href="#lab" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Process</a> <a href="#contact" class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors">Contact</a>
+    </div><a href="#contact" data-template-id="nav-cta" class="canva-button hidden md:inline-flex btn-primary !py-2.5 !px-5 !text-sm" style="background: rgb(99, 102, 241); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Start a Project</a> <button id="menu-toggle" class="md:hidden text-[var(--text-primary)]" aria-label="Toggle menu"><i data-lucide="menu" style="width:24px;height:24px;"></i></button>
    </div>
   </nav><!-- Mobile Nav -->
-  <div id="mobile-nav" class="mobile-nav"><button id="menu-close" class="absolute top-5 right-6 text-[var(--text-primary)]" aria-label="Close menu"><i data-lucide="x" style="width:28px;height:28px;"></i></button> <a href="#work" class="mobile-link">Work</a> <a href="#services" class="mobile-link">Services</a> <a href="#about" class="mobile-link">About</a> <a href="#lab" class="mobile-link">Lab</a> <a href="#contact" class="mobile-link">Contact</a>
+  <div id="mobile-nav" class="mobile-nav"><button id="menu-close" class="absolute top-5 right-6 text-[var(--text-primary)]" aria-label="Close menu"><i data-lucide="x" style="width:28px;height:28px;"></i></button> <a href="#work" class="mobile-link">Work</a> <a href="#services" class="mobile-link">Services</a> <a href="#about" class="mobile-link">About</a> <a href="#lab" class="mobile-link">Process</a> <a href="#contact" class="mobile-link">Contact</a>
   </div><!-- Hero -->
   <header class="min-h-screen flex items-center pt-16 relative overflow-hidden">
    <div class="max-w-7xl mx-auto px-6 w-full grid lg:grid-cols-2 gap-12 items-center py-20">
@@ -84,7 +93,7 @@
      <div class="flex flex-wrap gap-4 hero-reveal hero-reveal-d4"><a href="#contact" data-template-id="hero-cta-primary" class="canva-button btn-primary" style="background: rgb(99, 102, 241); color: rgb(255, 255, 255); font-weight: 600; font-style: normal; font-size: 16px;">Start a Project →</a> <a href="#work" data-template-id="hero-cta-secondary" class="canva-button btn-secondary" style="color: rgb(138, 138, 149); font-weight: 400; font-style: normal; font-size: 16px;">Explore Our Work ↓</a>
      </div>
     </div>
-    <div class="hidden lg:block relative" style="height: 420px;"><!-- Floating mockups -->
+    <div class="hidden lg:block relative" style="height: 420px;">
      <div class="absolute top-0 right-0 w-72 glass-card p-3 floating" style="box-shadow: 0 20px 60px rgba(0,0,0,0.4);">
       <div class="flex gap-1.5 mb-2">
        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span><span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span><span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
@@ -104,7 +113,7 @@
      <p data-template-id="work-label" class="canva-text section-label mb-3" style="color: rgb(99, 102, 241); font-weight: 600; font-style: normal; font-size: 12px;">SELECTED WORK</p>
      <h2 data-template-id="work-heading" class="canva-text text-3xl md:text-4xl font-bold" style="color: rgb(240, 240, 242); font-weight: 700; font-style: normal; font-size: 24px;">Projects that deliver results.</h2>
     </div>
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
      <div class="fade-up glass-card overflow-hidden group">
       <div class="p-4">
        <img data-template-id="project-1-img" class="canva-image project-img" loading="lazy" src="https://images.pexels.com/photos/19876064/pexels-photo-19876064.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="An aesthetically pleasing workspace featuring a laptop with a photographer's website">
@@ -127,7 +136,7 @@
      </div>
      <div class="fade-up glass-card overflow-hidden group">
       <div class="p-4">
-       <img data-template-id="project-3-img" class="canva-image project-img" loading="lazy" src="https://images.pexels.com/photos/4466420/pexels-photo-4466420.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Collection of black mockup business cards">
+       <img data-template-id="project-3-img" class="canva-image project-img" loading="lazy" src="https://images.pexels.com/photos/4466420/pexels-photo-4466420.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Collection of black mockup business cards placed against white wall">
       </div>
       <div class="px-6 pb-6">
        <p data-template-id="project-3-category" class="canva-text text-xs uppercase tracking-widest text-[var(--text-muted)] mb-2" style="color: rgb(90, 90, 101); font-weight: 400; font-style: normal; font-size: 11px;">BRAND IDENTITY</p>
@@ -145,39 +154,30 @@
        <p data-template-id="project-4-desc" class="canva-text text-sm text-[var(--text-secondary)]" style="color: rgb(138, 138, 149); font-weight: 400; font-style: normal; font-size: 16px;">SEO and paid strategy doubling organic traffic.</p>
       </div>
      </div>
+     <div class="fade-up glass-card overflow-hidden group">
+      <div class="p-4">
+       <img data-template-id="project-5-img" class="canva-image project-img" loading="lazy" src="https://images.pexels.com/photos/2047905/pexels-photo-2047905.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Laptop partially opened, emitting vibrant multicolored lights in dark setting">
+      </div>
+      <div class="px-6 pb-6">
+       <p data-template-id="project-5-category" class="canva-text text-xs uppercase tracking-widest text-[var(--text-muted)] mb-2" style="color: rgb(90, 90, 101); font-weight: 400; font-style: normal; font-size: 11px;">LANDING PAGE</p>
+       <h3 data-template-id="project-5-title" class="canva-text text-xl font-semibold mb-1" style="color: rgb(240, 240, 242); font-weight: 600; font-style: normal; font-size: 19px;">SaaS Product Launch</h3>
+       <p data-template-id="project-5-desc" class="canva-text text-sm text-[var(--text-secondary)]" style="color: rgb(138, 138, 149); font-weight: 400; font-style: normal; font-size: 16px;">High-converting landing page with 12% signup rate.</p>
+      </div>
+     </div>
+     <div class="fade-up glass-card overflow-hidden group">
+      <div class="p-4">
+       <img data-template-id="project-6-img" class="canva-image project-img" loading="lazy" src="https://images.pexels.com/photos/607812/pexels-photo-607812.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="A smartphone displaying various social media icons">
+      </div>
+      <div class="px-6 pb-6">
+       <p data-template-id="project-6-category" class="canva-text text-xs uppercase tracking-widest text-[var(--text-muted)] mb-2" style="color: rgb(90, 90, 101); font-weight: 400; font-style: normal; font-size: 11px;">SOCIAL MEDIA</p>
+       <h3 data-template-id="project-6-title" class="canva-text text-xl font-semibold mb-1" style="color: rgb(240, 240, 242); font-weight: 600; font-style: normal; font-size: 19px;">Content Strategy</h3>
+       <p data-template-id="project-6-desc" class="canva-text text-sm text-[var(--text-secondary)]" style="color: rgb(138, 138, 149); font-weight: 400; font-style: normal; font-size: 16px;">Social presence growing engagement by 280%.</p>
+      </div>
+     </div>
     </div>
    </div>
   </section><!-- Services Section -->
   <section id="services" class="py-24" style="background: var(--bg-secondary);">
    <div class="max-w-7xl mx-auto px-6">
     <div class="fade-up mb-16">
-     <p data-template-id="services-label" class="canva-text section-label mb-3" style="color: rgb(99, 102, 241); font-weight: 600; font-style: normal; font-size: 12px;">WHAT WE DO</p>
-     <h2 data-template-id="services-heading" class="canva-text text-3xl md:text-4xl font-bold" style="color: rgb(240, 240, 242); font-weight: 700; font-style: normal; font-size: 24px;">Services built for growth.</h2>
-    </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-     <div data-template-id="service-1" class="canva-card fade-up glass-card p-6" style="background: rgb(22, 22, 24);">
-      <div class="service-icon mb-4">
-       <i data-lucide="code-2" style="width:24px;height:24px;"></i>
-      </div>
-      <h3 data-template-id="service-1-title" class="canva-text font-semibold mb-2" style="color: rgb(240, 240, 242); font-weight: 600; font-style: normal; font-size: 19px;">Web Development</h3>
-      <p data-template-id="service-1-desc" class="canva-text text-sm text-[var(--text-secondary)]" style="color: rgb(138, 138, 149); font-weight: 400; font-style: normal; font-size: 16px;">Fast, responsive websites built with modern technologies.</p>
-     </div>
-     <div data-template-id="service-2" class="canva-card fade-up glass-card p-6" style="background: rgb(22, 22, 24);">
-      <div class="service-icon mb-4">
-       <i data-lucide="palette" style="width:24px;height:24px;"></i>
-      </div>
-      <h3 data-template-id="service-2-title" class="canva-text font-semibold mb-2" style="color: rgb(240, 240, 242); font-weight: 600; font-style: normal; font-size: 19px;">Website Design</h3>
-      <p data-template-id="service-2-desc" class="canva-text text-sm text-[var(--text-secondary)]" style="color: rgb(138, 138, 149); font-weight: 400; font-style: normal; font-size: 16px;">Premium UI/UX that converts visitors into customers.</p>
-     </div>
-     <div data-template-id="service-3" class="canva-card fade-up glass-card p-6" style="background: rgb(22, 22, 24);">
-      <div class="service-icon mb-4">
-       <i data-lucide="shopping-bag" style="width:24px;height:24px;"></i>
-      </div>
-      <h3 data-template-id="service-3-title" class="canva-text font-semibold mb-2" style="color: rgb(240, 240, 242); font-weight: 600; font-style: normal; font-size: 19px;">E-Commerce</h3>
-      <p data-template-id="service-3-desc" class="canva-text text-sm text-[var(--text-secondary)]" style="color: rgb(138, 138, 149); font-weight: 400; font-style: normal; font-size: 16px;">Online stores designed to sell and scale.</p>
-     </div>
-     <div data-template-id="service-4" class="canva-card fade-up glass-card p-6" style="background: rgb(22, 22, 24);">
-      <div class="service-icon mb-4">
-       <i data-lucide="trending-up" style="width:24px;height:24px;"></i>
-      </div>
-      <h3 data-template-id="service-4-title" class="canva-text font-semibold mb-2" st
+     <p data-template-id="services-label" 
