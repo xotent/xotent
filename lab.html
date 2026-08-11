@@ -54,15 +54,18 @@
 <!-- Navigation -->
 <header class="nav-bar fixed top-0 left-0 w-full z-50">
   <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <!-- Logo points to home (index.html) -->
     <a href="index.html" data-template-id="nav-logo" class="text-lg font-bold tracking-tight text-white"></a>
     <div class="hidden md:flex items-center gap-8">
-      <a href="work.html" data-template-id="nav-work" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <!-- Work → index.html -->
+      <a href="index.html" data-template-id="nav-work" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
       <a href="services.html" data-template-id="nav-services" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
       <a href="about.html" data-template-id="nav-about" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <!-- Lab is active -->
       <a href="lab.html" data-template-id="nav-lab" class="text-sm text-white transition-colors border-b border-accent pb-1"></a>
-      <a href="index.html#contact" data-template-id="nav-contact" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="contact.html" data-template-id="nav-contact" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
     </div>
-    <a href="index.html#contact" data-template-id="nav-cta" class="hidden md:inline-block btn-primary text-sm"></a>
+    <a href="contact.html" data-template-id="nav-cta" class="hidden md:inline-block btn-primary text-sm"></a>
     <button id="menu-toggle" class="md:hidden text-white p-2" aria-label="Open menu" aria-expanded="false">
       <i data-lucide="menu" style="width:24px;height:24px;"></i>
     </button>
@@ -74,11 +77,11 @@
   <button id="menu-close" class="absolute top-5 right-6 text-white p-2" aria-label="Close menu">
     <i data-lucide="x" style="width:28px;height:28px;"></i>
   </button>
-  <a href="work.html" data-template-id="mobile-work" class="text-2xl font-medium menu-link"></a>
+  <a href="index.html" data-template-id="mobile-work" class="text-2xl font-medium menu-link"></a>
   <a href="services.html" data-template-id="mobile-services" class="text-2xl font-medium menu-link"></a>
   <a href="about.html" data-template-id="mobile-about" class="text-2xl font-medium menu-link"></a>
   <a href="lab.html" data-template-id="mobile-lab" class="text-2xl font-medium menu-link text-accent"></a>
-  <a href="index.html#contact" data-template-id="mobile-contact" class="text-2xl font-medium menu-link"></a>
+  <a href="contact.html" data-template-id="mobile-contact" class="text-2xl font-medium menu-link"></a>
 </div>
 
 <main>
@@ -147,7 +150,7 @@
     <div class="max-w-3xl mx-auto px-6 text-center">
       <h2 data-template-id="cta-heading" class="section-heading mb-4 fade-up"></h2>
       <p data-template-id="cta-body" class="text-[#9A9AA6] mb-8 fade-up"></p>
-      <a href="index.html#contact" data-template-id="cta-button" class="btn-primary inline-block fade-up"></a>
+      <a href="contact.html" data-template-id="cta-button" class="btn-primary inline-block fade-up"></a>
     </div>
   </section>
 </main>
@@ -161,11 +164,11 @@
         <p data-template-id="footer-tagline" class="text-sm text-[#9A9AA6]"></p>
       </div>
       <div class="flex gap-6 text-sm text-[#9A9AA6]">
-        <a href="work.html" data-template-id="footer-work" class="hover:text-white transition-colors"></a>
+        <a href="index.html" data-template-id="footer-work" class="hover:text-white transition-colors"></a>
         <a href="services.html" data-template-id="footer-services" class="hover:text-white transition-colors"></a>
         <a href="about.html" data-template-id="footer-about" class="hover:text-white transition-colors"></a>
         <a href="lab.html" data-template-id="footer-lab" class="hover:text-white transition-colors"></a>
-        <a href="index.html#contact" data-template-id="footer-contact" class="hover:text-white transition-colors"></a>
+        <a href="contact.html" data-template-id="footer-contact" class="hover:text-white transition-colors"></a>
       </div>
     </div>
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-[rgba(255,255,255,0.06)]">
@@ -177,7 +180,7 @@
 
 <!-- Sticky Mobile CTA -->
 <div class="sticky-cta fixed bottom-0 left-0 w-full p-4 bg-[rgba(10,10,12,0.95)] border-t border-[rgba(255,255,255,0.06)] z-40" id="sticky-bar">
-  <a href="index.html#contact" data-template-id="sticky-cta" class="btn-primary block text-center w-full"></a>
+  <a href="contact.html" data-template-id="sticky-cta" class="btn-primary block text-center w-full"></a>
 </div>
 
 <script>
@@ -355,4 +358,4 @@
   if (typeof lucide !== 'undefined') lucide.createIcons();
 </script>
 </body>
-</html>
+      </html>
