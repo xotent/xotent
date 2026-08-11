@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact | Tech Kid</title>
+  <meta name="description" content="Get in touch with Tech Kid – we’d love to hear about your project. Reach out via email, phone, or our contact form.">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0A0A0C;
+      --bg-secondary: #111118;
+      --text-primary: #F5F5F7;
+      --text-secondary: #9A9AA6;
+      --accent: #2EE6FF;
+      --glass-bg: rgba(255,255,255,0.03);
+      --glass-border: rgba(255,255,255,0.06);
+      --radius: 16px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+    .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); backdrop-filter: blur(8px); }
+    .nav-bar { backdrop-filter: blur(12px); background: rgba(10,10,12,0.8); border-bottom: 1px solid var(--glass-border); }
+    .hero-heading { font-size: clamp(3rem, 7vw, 5rem); letter-spacing: -0.02em; line-height: 1.1; font-weight: 700; }
+    .section-heading { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -0.01em; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .btn-primary { background: var(--accent); color: #0A0A0C; font-weight: 600; border-radius: 8px; padding: 12px 24px; transition: transform var(--transition), box-shadow var(--transition); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(46,230,255,0.3); }
+    .btn-ghost { border: 1px solid var(--glass-border); color: var(--text-primary); font-weight: 500; border-radius: 8px; padding: 12px 24px; transition: border-color var(--transition); }
+    .btn-ghost:hover { border-color: var(--accent); }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .mobile-menu.open { transform: translateX(0); }
+    .sticky-cta { display: none; }
+    @media (max-width: 768px) { .sticky-cta { display: flex; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .fade-up { opacity: 1; transform: none; }
+    }
+    .contact-icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: rgba(46,230,255,0.1); color: var(--accent); flex-shrink: 0; }
+    .social-link { transition: color var(--transition); }
+    .social-link:hover { color: var(--accent); }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(46,230,255,0.2); }
+    .map-placeholder { background: var(--bg-secondary); border: 1px solid var(--glass-border); border-radius: var(--radius); overflow: hidden; }
+  </style>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { accent: '#2EE6FF', dark: '#0A0A0C', 'dark-2': '#111118' } } } }
+  </script>
+</head>
+<body class="min-h-screen w-full">
+
+<!-- Navigation -->
+<header class="nav-bar fixed top-0 left-0 w-full z-50">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <a href="index.html" data-template-id="nav-logo" class="text-lg font-bold tracking-tight text-white"></a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="work.html" data-template-id="nav-work" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="services.html" data-template-id="nav-services" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="about.html" data-template-id="nav-about" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="lab.html" data-template-id="nav-lab" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="contact.html" data-template-id="nav-contact" class="text-sm text-white transition-colors border-b border-accent pb-1"></a>
+    </div>
+    <a href="contact.html" data-template-id="nav-cta" class="hidden md:inline-block btn-primary text-sm"></a>
+    <button id="menu-toggle" class="md:hidden text-white p-2" aria-label="Open menu" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </nav>
+</header>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] bg-[#0A0A0C] flex flex-col items-center justify-center gap-8" aria-hidden="true">
+  <button id="menu-close" class="absolute top-5 right-6 text-white p-2" aria-label="Close menu">
+    <i data-lucide="x" style="width:28px;height:28px;"></i>
+  </button>
+  <a href="work.html" data-template-id="mobile-work" class="text-2xl font-medium menu-link"></a>
+  <a href="services.html" data-template-id="mobile-services" class="text-2xl font-medium menu-link"></a>
+  <a href="about.html" data-template-id="mobile-about" class="text-2xl font-medium menu-link"></a>
+  <a href="lab.html" data-template-id="mobile-lab" class="text-2xl font-medium menu-link"></a>
+  <a href="contact.html" data-template-id="mobile-contact" class="text-2xl font-medium menu-link text-accent"></a>
+</div>
+
+<main>
+  <!-- Hero -->
+  <section class="relative min-h-[40vh] flex items-center pt-16 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[rgba(46,230,255,0.06)] to-transparent"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 py-20">
+      <p data-template-id="hero-label" class="section-label mb-4 fade-up"></p>
+      <h1 data-template-id="hero-heading" class="hero-heading max-w-4xl mb-4 fade-up" style="transition-delay:0.1s;"></h1>
+      <p data-template-id="hero-subheading" class="text-xl md:text-2xl text-[#9A9AA6] max-w-2xl fade-up" style="transition-delay:0.2s;"></p>
+    </div>
+  </section>
+
+  <!-- Contact Form & Info -->
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Contact Form (takes 2 columns on large screens) -->
+        <div class="lg:col-span-2 fade-up">
+          <div class="glass-card p-8">
+            <h2 data-template-id="form-heading" class="text-2xl font-bold mb-2"></h2>
+            <p data-template-id="form-subtext" class="text-[#9A9AA6] mb-6"></p>
+            <form id="contact-form" action="https://formspree.io/f/your-id" method="POST">
+              <input type="text" name="_gotcha" style="display:none">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for="name" class="text-sm text-[#9A9AA6] block mb-1">Name *</label>
+                  <input type="text" id="name" name="name" required class="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-3 text-white placeholder-[#9A9AA6]" placeholder="Your name">
+                </div>
+                <div>
+                  <label for="email" class="text-sm text-[#9A9AA6] block mb-1">Email *</label>
+                  <input type="email" id="email" name="email" required class="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-3 text-white placeholder-[#9A9AA6]" placeholder="you@company.com">
+                </div>
+              </div>
+              <div class="mt-4">
+                <label for="subject" class="text-sm text-[#9A9AA6] block mb-1">Subject</label>
+                <input type="text" id="subject" name="subject" class="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-3 text-white placeholder-[#9A9AA6]" placeholder="How can we help?">
+              </div>
+              <div class="mt-4">
+                <label for="message" class="text-sm text-[#9A9AA6] block mb-1">Message *</label>
+                <textarea id="message" name="message" rows="5" required class="w-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-lg px-4 py-3 text-white placeholder-[#9A9AA6] resize-none" placeholder="Tell us about your project..."></textarea>
+              </div>
+              <button type="submit" data-template-id="form-submit" class="btn-primary w-full mt-6"></button>
+              <p id="form-success" class="text-[#2EE6FF] text-sm text-center hidden mt-4">Thank you! We'll be in touch within 24 hours.</p>
+              <p id="form-error" class="text-red-400 text-sm text-center hidden mt-4">Something went wrong. Please try again.</p>
+            </form>
+          </div>
+        </div>
+
+        <!-- Contact Details -->
+        <div class="space-y-6 fade-up">
+          <div class="glass-card p-6">
+            <h3 data-template-id="info-heading" class="font-bold text-lg mb-4"></h3>
+            <div class="space-y-4">
+              <div class="flex items-start gap-4">
+                <div class="contact-icon"><i data-lucide="mail" style="width:24px;height:24px;"></i></div>
+                <div>
+                  <p class="text-sm text-[#9A9AA6]">Email</p>
+                  <a href="mailto:hello@techkid.studio" data-template-id="info-email" class="hover:text-accent transition-colors"></a>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="contact-icon"><i data-lucide="phone" style="width:24px;height:24px;"></i></div>
+                <div>
+                  <p class="text-sm text-[#9A9AA6]">Phone</p>
+                  <a href="tel:+254712345678" data-template-id="info-phone" class="hover:text-accent transition-colors"></a>
+                </div>
+              </div>
+              <div class="flex items-start gap-4">
+                <div class="contact-icon"><i data-lucide="map-pin" style="width:24px;height:24px;"></i></div>
+                <div>
+                  <p class="text-sm text-[#9A9AA6]">Location</p>
+                  <p data-template-id="info-address" class="text-sm"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="glass-card p-6">
+            <h3 data-template-id="social-heading" class="font-bold text-lg mb-4"></h3>
+            <div class="flex gap-4">
+              <a href="#" data-template-id="social-twitter" class="social-link text-[#9A9AA6] hover:text-accent transition-colors" aria-label="Twitter"><i data-lucide="twitter" style="width:24px;height:24px;"></i></a>
+              <a href="#" data-template-id="social-linkedin" class="social-link text-[#9A9AA6] hover:text-accent transition-colors" aria-label="LinkedIn"><i data-lucide="linkedin" style="width:24px;height:24px;"></i></a>
+              <a href="#" data-template-id="social-github" class="social-link text-[#9A9AA6] hover:text-accent transition-colors" aria-label="GitHub"><i data-lucide="github" style="width:24px;height:24px;"></i></a>
+              <a href="#" data-template-id="social-instagram" class="social-link text-[#9A9AA6] hover:text-accent transition-colors" aria-label="Instagram"><i data-lucide="instagram" style="width:24px;height:24px;"></i></a>
+            </div>
+          </div>
+
+          <!-- Map placeholder -->
+          <div class="map-placeholder h-48 flex items-center justify-center border border-[rgba(255,255,255,0.06)]">
+            <div class="text-center text-[#9A9AA6]">
+              <i data-lucide="map" style="width:36px;height:36px;margin:0 auto 8px;"></i>
+              <p data-template-id="map-text" class="text-sm"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section (optional, but gives extra touch) -->
+  <section class="py-16 md:py-24 bg-[#111118]">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 data-template-id="cta-heading" class="section-heading mb-4 fade-up"></h2>
+      <p data-template-id="cta-body" class="text-[#9A9AA6] mb-8 fade-up"></p>
+      <a href="mailto:hello@techkid.studio" data-template-id="cta-button" class="btn-primary inline-block fade-up"></a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-[rgba(255,255,255,0.06)] py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
+      <div>
+        <p data-template-id="footer-logo" class="font-bold text-lg mb-2"></p>
+        <p data-template-id="footer-tagline" class="text-sm text-[#9A9AA6]"></p>
+      </div>
+      <div class="flex gap-6 text-sm text-[#9A9AA6]">
+        <a href="work.html" data-template-id="footer-work" class="hover:text-white transition-colors"></a>
+        <a href="services.html" data-template-id="footer-services" class="hover:text-white transition-colors"></a>
+        <a href="about.html" data-template-id="footer-about" class="hover:text-white transition-colors"></a>
+        <a href="lab.html" data-template-id="footer-lab" class="hover:text-white transition-colors"></a>
+        <a href="contact.html" data-template-id="footer-contact" class="hover:text-white transition-colors"></a>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-[rgba(255,255,255,0.06)]">
+      <p data-template-id="footer-copyright" class="text-xs text-[#9A9AA6]"></p>
+      <a href="#hero" class="text-xs text-[#9A9AA6] hover:text-white transition-colors">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky Mobile CTA (hidden on contact page, but keep for consistency) -->
+<div class="sticky-cta fixed bottom-0 left-0 w-full p-4 bg-[rgba(10,10,12,0.95)] border-t border-[rgba(255,255,255,0.06)] z-40" id="sticky-bar">
+  <a href="contact.html" data-template-id="sticky-cta" class="btn-primary block text-center w-full"></a>
+</div>
+
+<script>
+  // ============================================================
+  //  CONTENT – edit this object to change the page
+  // ============================================================
+  const pageContent = {
+    // Navigation
+    navLogo: 'Tech Kid',
+    navWork: 'Work',
+    navServices: 'Services',
+    navAbout: 'About',
+    navLab: 'Lab',
+    navContact: 'Contact',
+    navCta: 'Let\'s Talk',
+
+    // Mobile
+    mobileWork: 'Work',
+    mobileServices: 'Services',
+    mobileAbout: 'About',
+    mobileLab: 'Lab',
+    mobileContact: 'Contact',
+
+    // Hero
+    heroLabel: 'Contact',
+    heroHeading: 'Let’s connect',
+    heroSubheading: 'Have a project, a question, or just want to say hello? We’d love to hear from you.',
+
+    // Form
+    formHeading: 'Send us a message',
+    formSubtext: 'Fill in the form below and we’ll get back to you within 24 hours.',
+    formSubmit: 'Send Message →',
+
+    // Contact details
+    infoHeading: 'Get in touch',
+    infoEmail: 'hello@techkid.studio',
+    infoPhone: '+254 712 345 678',
+    infoAddress: 'Nairobi, Kenya',
+
+    // Social
+    socialHeading: 'Follow us',
+    socialTwitter: 'https://twitter.com/techkid',
+    socialLinkedin: 'https://linkedin.com/company/techkid',
+    socialGithub: 'https://github.com/techkid',
+    socialInstagram: 'https://instagram.com/techkid',
+
+    // Map
+    mapText: 'Find us in Nairobi',
+
+    // CTA Section (bottom)
+    ctaHeading: 'Prefer to talk directly?',
+    ctaBody: 'Send us an email and we’ll reply within a few hours.',
+    ctaButton: 'Email us',
+
+    // Footer
+    footerLogo: 'Tech Kid',
+    footerTagline: 'Digital technology studio.',
+    footerWork: 'Work',
+    footerServices: 'Services',
+    footerAbout: 'About',
+    footerLab: 'Lab',
+    footerContact: 'Contact',
+    footerCopyright: '© 2026 Tech Kid. All rights reserved.',
+
+    // Sticky
+    stickyCta: 'Contact us'
+  };
+
+  // ============================================================
+  //  INJECTOR – do not edit below this line
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function() {
+    const map = {
+      'nav-logo': pageContent.navLogo,
+      'nav-work': pageContent.navWork,
+      'nav-services': pageContent.navServices,
+      'nav-about': pageContent.navAbout,
+      'nav-lab': pageContent.navLab,
+      'nav-contact': pageContent.navContact,
+      'nav-cta': pageContent.navCta,
+      'mobile-work': pageContent.mobileWork,
+      'mobile-services': pageContent.mobileServices,
+      'mobile-about': pageContent.mobileAbout,
+      'mobile-lab': pageContent.mobileLab,
+      'mobile-contact': pageContent.mobileContact,
+      'hero-label': pageContent.heroLabel,
+      'hero-heading': pageContent.heroHeading,
+      'hero-subheading': pageContent.heroSubheading,
+      'form-heading': pageContent.formHeading,
+      'form-subtext': pageContent.formSubtext,
+      'form-submit': pageContent.formSubmit,
+      'info-heading': pageContent.infoHeading,
+      'info-email': pageContent.infoEmail,
+      'info-phone': pageContent.infoPhone,
+      'info-address': pageContent.infoAddress,
+      'social-heading': pageContent.socialHeading,
+      'social-twitter': pageContent.socialTwitter,
+      'social-linkedin': pageContent.socialLinkedin,
+      'social-github': pageContent.socialGithub,
+      'social-instagram': pageContent.socialInstagram,
+      'map-text': pageContent.mapText,
+      'cta-heading': pageContent.ctaHeading,
+      'cta-body': pageContent.ctaBody,
+      'cta-button': pageContent.ctaButton,
+      'footer-logo': pageContent.footerLogo,
+      'footer-tagline': pageContent.footerTagline,
+      'footer-work': pageContent.footerWork,
+      'footer-services': pageContent.footerServices,
+      'footer-about': pageContent.footerAbout,
+      'footer-lab': pageContent.footerLab,
+      'footer-contact': pageContent.footerContact,
+      'footer-copyright': pageContent.footerCopyright,
+      'sticky-cta': pageContent.stickyCta
+    };
+
+    Object.keys(map).forEach(id => {
+      const el = document.querySelector(`[data-template-id="${id}"]`);
+      if (el) {
+        if (id.startsWith('social-') && id !== 'social-heading') {
+          // For social links, set href attribute
+          el.setAttribute('href', map[id]);
+        } else {
+          el.innerHTML = map[id];
+        }
+      }
+    });
+
+    // Set form action (update with your Formspree ID)
+    const form = document.getElementById('contact-form');
+    if (form) {
+      // You can also set the action dynamically from a config variable if you prefer.
+      // For now, it uses the default action; edit the HTML action attribute directly.
+    }
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  });
+</script>
+
+<!-- Interactive scripts -->
+<script>
+  // Mobile menu
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if(menuToggle && menuClose && mobileMenu) {
+    menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); menuToggle.setAttribute('aria-expanded','true'); });
+    menuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); menuToggle.setAttribute('aria-expanded','false'); });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); }));
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); });
+  });
+
+  // Scroll reveals
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, {threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Form submission
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending...';
+      try {
+        const res = await fetch(form.action, { method:'POST', body: new FormData(form), headers:{'Accept':'application/json'} });
+        if(res.ok) {
+          document.getElementById('form-success').classList.remove('hidden');
+          form.reset();
+        } else {
+          document.getElementById('form-error').classList.remove('hidden');
+        }
+      } catch {
+        document.getElementById('form-error').classList.remove('hidden');
+      }
+      btn.disabled = false; btn.textContent = originalText;
+    });
+  }
+
+  // Hide sticky bar when footer visible
+  const stickyBar = document.getElementById('sticky-bar');
+  const footerObs = new IntersectionObserver(([e]) => { if(stickyBar) stickyBar.style.display = e.isIntersecting ? 'none' : ''; }, {threshold:0.1});
+  const footer = document.querySelector('footer');
+  if(footer) footerObs.observe(footer);
+
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>
+</body>
+</html>
