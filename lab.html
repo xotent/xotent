@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>R&D Lab | Tech Kid</title>
+  <meta name="description" content="Explore our R&D Lab – experimental projects, new technologies, and the future of digital experiences.">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0A0A0C;
+      --bg-secondary: #111118;
+      --text-primary: #F5F5F7;
+      --text-secondary: #9A9AA6;
+      --accent: #2EE6FF;
+      --glass-bg: rgba(255,255,255,0.03);
+      --glass-border: rgba(255,255,255,0.06);
+      --radius: 16px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+    .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); backdrop-filter: blur(8px); }
+    .nav-bar { backdrop-filter: blur(12px); background: rgba(10,10,12,0.8); border-bottom: 1px solid var(--glass-border); }
+    .hero-heading { font-size: clamp(3rem, 7vw, 5rem); letter-spacing: -0.02em; line-height: 1.1; font-weight: 700; }
+    .section-heading { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -0.01em; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .btn-primary { background: var(--accent); color: #0A0A0C; font-weight: 600; border-radius: 8px; padding: 12px 24px; transition: transform var(--transition), box-shadow var(--transition); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(46,230,255,0.3); }
+    .btn-ghost { border: 1px solid var(--glass-border); color: var(--text-primary); font-weight: 500; border-radius: 8px; padding: 12px 24px; transition: border-color var(--transition); }
+    .btn-ghost:hover { border-color: var(--accent); }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .mobile-menu.open { transform: translateX(0); }
+    .sticky-cta { display: none; }
+    @media (max-width: 768px) { .sticky-cta { display: flex; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .fade-up { opacity: 1; transform: none; }
+    }
+    .status-badge { background: rgba(46,230,255,0.15); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; display: inline-block; }
+    .lab-card { transition: transform var(--transition), box-shadow var(--transition); }
+    .lab-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+  </style>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { accent: '#2EE6FF', dark: '#0A0A0C', 'dark-2': '#111118' } } } }
+  </script>
+</head>
+<body class="min-h-screen w-full">
+
+<!-- Navigation -->
+<header class="nav-bar fixed top-0 left-0 w-full z-50">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <a href="index.html" data-template-id="nav-logo" class="text-lg font-bold tracking-tight text-white"></a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="work.html" data-template-id="nav-work" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="services.html" data-template-id="nav-services" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="about.html" data-template-id="nav-about" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="lab.html" data-template-id="nav-lab" class="text-sm text-white transition-colors border-b border-accent pb-1"></a>
+      <a href="index.html#contact" data-template-id="nav-contact" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+    </div>
+    <a href="index.html#contact" data-template-id="nav-cta" class="hidden md:inline-block btn-primary text-sm"></a>
+    <button id="menu-toggle" class="md:hidden text-white p-2" aria-label="Open menu" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </nav>
+</header>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] bg-[#0A0A0C] flex flex-col items-center justify-center gap-8" aria-hidden="true">
+  <button id="menu-close" class="absolute top-5 right-6 text-white p-2" aria-label="Close menu">
+    <i data-lucide="x" style="width:28px;height:28px;"></i>
+  </button>
+  <a href="work.html" data-template-id="mobile-work" class="text-2xl font-medium menu-link"></a>
+  <a href="services.html" data-template-id="mobile-services" class="text-2xl font-medium menu-link"></a>
+  <a href="about.html" data-template-id="mobile-about" class="text-2xl font-medium menu-link"></a>
+  <a href="lab.html" data-template-id="mobile-lab" class="text-2xl font-medium menu-link text-accent"></a>
+  <a href="index.html#contact" data-template-id="mobile-contact" class="text-2xl font-medium menu-link"></a>
+</div>
+
+<main>
+  <!-- Hero -->
+  <section class="relative min-h-[50vh] flex items-center pt-16 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[rgba(46,230,255,0.06)] to-transparent"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 py-20">
+      <p data-template-id="hero-label" class="section-label mb-4 fade-up"></p>
+      <h1 data-template-id="hero-heading" class="hero-heading max-w-4xl mb-4 fade-up" style="transition-delay:0.1s;"></h1>
+      <p data-template-id="hero-subheading" class="text-xl md:text-2xl text-[#9A9AA6] max-w-2xl fade-up" style="transition-delay:0.2s;"></p>
+    </div>
+  </section>
+
+  <!-- Lab Projects -->
+  <section class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <p data-template-id="lab-label" class="section-label mb-3 fade-up"></p>
+      <h2 data-template-id="lab-heading" class="section-heading mb-12 fade-up"></h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="lab-grid">
+        <!-- Lab projects injected -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Current Focus -->
+  <section class="py-16 md:py-24 bg-[#111118]">
+    <div class="max-w-7xl mx-auto px-6">
+      <p data-template-id="focus-label" class="section-label mb-3 fade-up text-center"></p>
+      <h2 data-template-id="focus-heading" class="section-heading mb-12 fade-up text-center"></h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div data-template-id="focus-1" class="glass-card p-8 fade-up hover:border-accent transition-colors">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 flex items-center justify-center text-accent flex-shrink-0"><i data-lucide="zap" style="width:28px;height:28px;"></i></div>
+            <div>
+              <h3 data-template-id="focus-1-title" class="font-semibold text-lg mb-2"></h3>
+              <p data-template-id="focus-1-desc" class="text-sm text-[#9A9AA6]"></p>
+            </div>
+          </div>
+        </div>
+        <div data-template-id="focus-2" class="glass-card p-8 fade-up hover:border-accent transition-colors">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 flex items-center justify-center text-accent flex-shrink-0"><i data-lucide="bot" style="width:28px;height:28px;"></i></div>
+            <div>
+              <h3 data-template-id="focus-2-title" class="font-semibold text-lg mb-2"></h3>
+              <p data-template-id="focus-2-desc" class="text-sm text-[#9A9AA6]"></p>
+            </div>
+          </div>
+        </div>
+        <div data-template-id="focus-3" class="glass-card p-8 fade-up hover:border-accent transition-colors">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 flex items-center justify-center text-accent flex-shrink-0"><i data-lucide="globe" style="width:28px;height:28px;"></i></div>
+            <div>
+              <h3 data-template-id="focus-3-title" class="font-semibold text-lg mb-2"></h3>
+              <p data-template-id="focus-3-desc" class="text-sm text-[#9A9AA6]"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 md:py-32">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 data-template-id="cta-heading" class="section-heading mb-4 fade-up"></h2>
+      <p data-template-id="cta-body" class="text-[#9A9AA6] mb-8 fade-up"></p>
+      <a href="index.html#contact" data-template-id="cta-button" class="btn-primary inline-block fade-up"></a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-[rgba(255,255,255,0.06)] py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
+      <div>
+        <p data-template-id="footer-logo" class="font-bold text-lg mb-2"></p>
+        <p data-template-id="footer-tagline" class="text-sm text-[#9A9AA6]"></p>
+      </div>
+      <div class="flex gap-6 text-sm text-[#9A9AA6]">
+        <a href="work.html" data-template-id="footer-work" class="hover:text-white transition-colors"></a>
+        <a href="services.html" data-template-id="footer-services" class="hover:text-white transition-colors"></a>
+        <a href="about.html" data-template-id="footer-about" class="hover:text-white transition-colors"></a>
+        <a href="lab.html" data-template-id="footer-lab" class="hover:text-white transition-colors"></a>
+        <a href="index.html#contact" data-template-id="footer-contact" class="hover:text-white transition-colors"></a>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-[rgba(255,255,255,0.06)]">
+      <p data-template-id="footer-copyright" class="text-xs text-[#9A9AA6]"></p>
+      <a href="#hero" class="text-xs text-[#9A9AA6] hover:text-white transition-colors">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky Mobile CTA -->
+<div class="sticky-cta fixed bottom-0 left-0 w-full p-4 bg-[rgba(10,10,12,0.95)] border-t border-[rgba(255,255,255,0.06)] z-40" id="sticky-bar">
+  <a href="index.html#contact" data-template-id="sticky-cta" class="btn-primary block text-center w-full"></a>
+</div>
+
+<script>
+  // ============================================================
+  //  CONTENT – edit this object to change the page
+  // ============================================================
+  const pageContent = {
+    // Navigation
+    navLogo: 'Tech Kid',
+    navWork: 'Work',
+    navServices: 'Services',
+    navAbout: 'About',
+    navLab: 'Lab',
+    navContact: 'Contact',
+    navCta: 'Let\'s Talk',
+
+    // Mobile
+    mobileWork: 'Work',
+    mobileServices: 'Services',
+    mobileAbout: 'About',
+    mobileLab: 'Lab',
+    mobileContact: 'Contact',
+
+    // Hero
+    heroLabel: 'R&D Lab',
+    heroHeading: 'Building tomorrow’s web',
+    heroSubheading: 'We experiment with emerging technologies, push creative boundaries, and share our discoveries openly.',
+
+    // Lab projects – each with an icon (Lucide name), status, title, and description
+    labItems: [
+      { icon: 'rocket', status: 'Active', title: 'Edge Computing Optimisation', desc: 'We’re testing serverless edge functions to reduce latency and improve Core Web Vitals across global audiences.' },
+      { icon: 'sparkles', status: 'Prototype', title: 'Generative UI Studio', desc: 'An AI‑powered tool that generates design systems and component libraries from natural language prompts.' },
+      { icon: 'link-2', status: 'Research', title: 'Web3 Access Layer', desc: 'Building a simplified authentication and payment layer that makes blockchain interactions feel like traditional web apps.' },
+      { icon: 'gauge', status: 'Active', title: 'Carbon‑Aware Computing', desc: 'Optimising compute resources to run only during periods of low‑carbon electricity, reducing our digital footprint.' },
+      { icon: 'eye', status: 'Prototype', title: 'AR Product Visualiser', desc: 'A WebAR toolkit that lets e‑commerce customers visualise products in their own space using just a smartphone.' },
+      { icon: 'microscope', status: 'Research', title: 'Voice‑First Interfaces', desc: 'Exploring voice‑controlled dashboards and conversational UX for hands‑free productivity.' }
+    ],
+
+    // Current Focus areas
+    focusLabel: 'Current focus',
+    focusHeading: 'What we’re exploring right now',
+    focusItems: [
+      { title: 'AI & Automation', desc: 'Building intelligent agents that automate repetitive tasks, analyse user behaviour, and personalise experiences at scale.' },
+      { title: 'Sustainable Web', desc: 'Developing lightweight, low‑carbon websites that are fast, accessible, and minimise environmental impact.' },
+      { title: 'Web3 & Decentralisation', desc: 'Creating interfaces that abstract blockchain complexity – making Web3 usable for everyday businesses and users.' }
+    ],
+
+    // CTA
+    ctaHeading: 'Interested in collaborating?',
+    ctaBody: 'We’re always open to partnerships, research projects, and bold ideas. Let’s talk.',
+    ctaButton: 'Let’s collaborate',
+
+    // Footer
+    footerLogo: 'Tech Kid',
+    footerTagline: 'Digital technology studio.',
+    footerWork: 'Work',
+    footerServices: 'Services',
+    footerAbout: 'About',
+    footerLab: 'Lab',
+    footerContact: 'Contact',
+    footerCopyright: '© 2026 Tech Kid. All rights reserved.',
+
+    // Sticky
+    stickyCta: 'Start a project'
+  };
+
+  // ============================================================
+  //  INJECTOR – do not edit below this line
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function() {
+    const map = {
+      'nav-logo': pageContent.navLogo,
+      'nav-work': pageContent.navWork,
+      'nav-services': pageContent.navServices,
+      'nav-about': pageContent.navAbout,
+      'nav-lab': pageContent.navLab,
+      'nav-contact': pageContent.navContact,
+      'nav-cta': pageContent.navCta,
+      'mobile-work': pageContent.mobileWork,
+      'mobile-services': pageContent.mobileServices,
+      'mobile-about': pageContent.mobileAbout,
+      'mobile-lab': pageContent.mobileLab,
+      'mobile-contact': pageContent.mobileContact,
+      'hero-label': pageContent.heroLabel,
+      'hero-heading': pageContent.heroHeading,
+      'hero-subheading': pageContent.heroSubheading,
+      'lab-label': 'Our experiments',
+      'lab-heading': 'Projects & prototypes',
+      'focus-label': pageContent.focusLabel,
+      'focus-heading': pageContent.focusHeading,
+      'cta-heading': pageContent.ctaHeading,
+      'cta-body': pageContent.ctaBody,
+      'cta-button': pageContent.ctaButton,
+      'footer-logo': pageContent.footerLogo,
+      'footer-tagline': pageContent.footerTagline,
+      'footer-work': pageContent.footerWork,
+      'footer-services': pageContent.footerServices,
+      'footer-about': pageContent.footerAbout,
+      'footer-lab': pageContent.footerLab,
+      'footer-contact': pageContent.footerContact,
+      'footer-copyright': pageContent.footerCopyright,
+      'sticky-cta': pageContent.stickyCta
+    };
+
+    Object.keys(map).forEach(id => {
+      const el = document.querySelector(`[data-template-id="${id}"]`);
+      if (el) el.innerHTML = map[id];
+    });
+
+    // Lab grid
+    const grid = document.getElementById('lab-grid');
+    if (grid) {
+      grid.innerHTML = '';
+      pageContent.labItems.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'glass-card lab-card p-6 fade-up';
+        card.style.transitionDelay = `${idx * 0.08}s`;
+        card.innerHTML = `
+          <div class="flex items-start justify-between mb-3">
+            <div class="w-10 h-10 flex items-center justify-center text-accent"><i data-lucide="${item.icon}" style="width:24px;height:24px;"></i></div>
+            <span class="status-badge">${item.status}</span>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">${item.title}</h3>
+          <p class="text-sm text-[#9A9AA6]">${item.desc}</p>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Focus areas
+    const focusMap = [
+      { id: 'focus-1', idx: 0 }, { id: 'focus-2', idx: 1 }, { id: 'focus-3', idx: 2 }
+    ];
+    focusMap.forEach(({id, idx}) => {
+      const container = document.querySelector(`[data-template-id="${id}"]`);
+      if (container) {
+        const title = container.querySelector('[data-template-id*="title"]');
+        const desc = container.querySelector('[data-template-id*="desc"]');
+        if (title) title.textContent = pageContent.focusItems[idx].title;
+        if (desc) desc.textContent = pageContent.focusItems[idx].desc;
+      }
+    });
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  });
+</script>
+
+<!-- Interactive scripts -->
+<script>
+  // Mobile menu
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  if(menuToggle && menuClose && mobileMenu) {
+    menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); menuToggle.setAttribute('aria-expanded','true'); });
+    menuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); menuToggle.setAttribute('aria-expanded','false'); });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); }));
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); });
+  });
+
+  // Scroll reveals
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, {threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Hide sticky bar when footer visible
+  const stickyBar = document.getElementById('sticky-bar');
+  const footerObs = new IntersectionObserver(([e]) => { if(stickyBar) stickyBar.style.display = e.isIntersecting ? 'none' : ''; }, {threshold:0.1});
+  const footer = document.querySelector('footer');
+  if(footer) footerObs.observe(footer);
+
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>
+</body>
+</html>
