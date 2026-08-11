@@ -367,4 +367,48 @@
   if(menuToggle && menuClose && mobileMenu) {
     menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); menuToggle.setAttribute('aria-expanded','true'); });
     menuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); menuToggle.setAttribute('aria-expanded','false'); });
-    mobileMenu.querySelectorAll('a').forEach(a => a.ad
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); }));
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); });
+  });
+
+  // Scroll reveals
+  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, {threshold:0.1});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Form submission
+  const form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Sending...';
+      try {
+        const res = await fetch(form.action, { method:'POST', body: new FormData(form), headers:{'Accept':'application/json'} });
+        if(res.ok) {
+          document.getElementById('form-success').classList.remove('hidden');
+          form.reset();
+        } else {
+          document.getElementById('form-error').classList.remove('hidden');
+        }
+      } catch {
+        document.getElementById('form-error').classList.remove('hidden');
+      }
+      btn.disabled = false; btn.textContent = originalText;
+    });
+  }
+
+  // Hide sticky bar when footer visible
+  const stickyBar = document.getElementById('sticky-bar');
+  const footerObs = new IntersectionObserver(([e]) => { if(stickyBar) stickyBar.style.display = e.isIntersecting ? 'none' : ''; }, {threshold:0.1});
+  const footer = document.querySelector('footer');
+  if(footer) footerObs.observe(footer);
+
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+</script>
+</body>
+</html>
