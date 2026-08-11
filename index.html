@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech Kid | Digital Studio</title>
+  <meta name="description" content="Explore our portfolio of digital projects – from web apps to brand identities.">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0A0A0C;
+      --bg-secondary: #111118;
+      --text-primary: #F5F5F7;
+      --text-secondary: #9A9AA6;
+      --accent: #2EE6FF;
+      --glass-bg: rgba(255,255,255,0.03);
+      --glass-border: rgba(255,255,255,0.06);
+      --radius: 16px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+    .glass-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius); backdrop-filter: blur(8px); }
+    .nav-bar { backdrop-filter: blur(12px); background: rgba(10,10,12,0.8); border-bottom: 1px solid var(--glass-border); }
+    .hero-heading { font-size: clamp(3rem, 7vw, 5rem); letter-spacing: -0.02em; line-height: 1.1; font-weight: 700; }
+    .section-heading { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -0.01em; }
+    .section-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .project-card { transition: transform var(--transition); overflow: hidden; border-radius: var(--radius); }
+    .project-card:hover { transform: translateY(-2px); }
+    .project-card .overlay { opacity: 0; transition: opacity var(--transition); }
+    .project-card:hover .overlay { opacity: 1; }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .filter-btn { transition: color var(--transition), border-color var(--transition); }
+    .filter-btn.active { color: var(--accent); border-color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #0A0A0C; font-weight: 600; border-radius: 8px; padding: 12px 24px; transition: transform var(--transition), box-shadow var(--transition); }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(46,230,255,0.3); }
+    .btn-ghost { border: 1px solid var(--glass-border); color: var(--text-primary); font-weight: 500; border-radius: 8px; padding: 12px 24px; transition: border-color var(--transition); }
+    .btn-ghost:hover { border-color: var(--accent); }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .mobile-menu.open { transform: translateX(0); }
+    .sticky-cta { display: none; }
+    @media (max-width: 768px) { .sticky-cta { display: flex; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .fade-up { opacity: 1; transform: none; }
+    }
+  </style>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { accent: '#2EE6FF', dark: '#0A0A0C', 'dark-2': '#111118' } } } }
+  </script>
+</head>
+<body class="min-h-screen w-full">
+
+<!-- Navigation -->
+<header class="nav-bar fixed top-0 left-0 w-full z-50">
+  <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <!-- Logo links to home (this page) -->
+    <a href="index.html" data-template-id="nav-logo" class="text-lg font-bold tracking-tight text-white"></a>
+    <div class="hidden md:flex items-center gap-8">
+      <!-- "Work" links to home (this page) -->
+      <a href="index.html" data-template-id="nav-work" class="text-sm text-white transition-colors border-b border-accent pb-1"></a>
+      <a href="services.html" data-template-id="nav-services" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="about.html" data-template-id="nav-about" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="lab.html" data-template-id="nav-lab" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <a href="contact.html" data-template-id="nav-contact" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+    </div>
+    <a href="contact.html" data-template-id="nav-cta" class="hidden md:inline-block btn-primary text-sm"></a>
+    <button id="menu-toggle" class="md:hidden text-white p-2" aria-label="Open menu" aria-expanded="false">
+      <i data-lucide="menu" style="width:24px;height:24px;"></i>
+    </button>
+  </nav>
+</header>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="mobile-menu fixed inset-0 z-[60] bg-[#0A0A0C] flex flex-col items-center justify-center gap-8" aria-hidden="true">
+  <button id="menu-close" class="absolute top-5 right-6 text-white p-2" aria-label="Close menu">
+    <i data-lucide="x" style="width:28px;height:28px;"></i>
+  </button>
+  <a href="index.html" data-template-id="mobile-work" class="text-2xl font-medium menu-link text-accent"></a>
+  <a href="services.html" data-template-id="mobile-services" class="text-2xl font-medium menu-link"></a>
+  <a href="about.html" data-template-id="mobile-about" class="text-2xl font-medium menu-link"></a>
+  <a href="lab.html" data-template-id="mobile-lab" class="text-2xl font-medium menu-link"></a>
+  <a href="contact.html" data-template-id="mobile-contact" class="text-2xl font-medium menu-link"></a>
+</div>
+
+<main>
+  <!-- Hero -->
+  <section class="relative min-h-[50vh] flex items-center pt-16 overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gradient-radial from-[rgba(46,230,255,0.06)] to-transparent"></div>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 py-20">
+      <p data-template-id="hero-label" class="section-label mb-4 fade-up"></p>
+      <h1 data-template-id="hero-heading" class="hero-heading max-w-4xl mb-4 fade-up" style="transition-delay:0.1s;"></h1>
+      <p data-template-id="hero-subheading" class="text-xl md:text-2xl text-[#9A9AA6] max-w-2xl fade-up" style="transition-delay:0.2s;"></p>
+    </div>
+  </section>
+
+  <!-- Work Grid -->
+  <section id="work" class="py-16 md:py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-wrap gap-3 mb-10 fade-up">
+        <button class="filter-btn active text-sm px-4 py-2 border border-[rgba(255,255,255,0.1)] rounded-full" data-filter="all">All</button>
+        <button class="filter-btn text-sm px-4 py-2 border border-[rgba(255,255,255,0.1)] rounded-full text-[#9A9AA6]" data-filter="web">Web</button>
+        <button class="filter-btn text-sm px-4 py-2 border border-[rgba(255,255,255,0.1)] rounded-full text-[#9A9AA6]" data-filter="brand">Brand</button>
+        <button class="filter-btn text-sm px-4 py-2 border border-[rgba(255,255,255,0.1)] rounded-full text-[#9A9AA6]" data-filter="ecommerce">E-commerce</button>
+        <button class="filter-btn text-sm px-4 py-2 border border-[rgba(255,255,255,0.1)] rounded-full text-[#9A9AA6]" data-filter="mobile">Mobile</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
+        <!-- Projects will be injected here -->
+        <div class="project-card relative fade-up" data-category="web">
+          <img data-template-id="project-1-img" class="w-full h-64 object-cover" loading="lazy">
+          <div class="overlay absolute inset-0 bg-gradient-to-t from-[rgba(10,10,12,0.9)] to-transparent flex flex-col justify-end p-6">
+            <span data-template-id="project-1-cat" class="text-xs text-[#2EE6FF] font-medium mb-1"></span>
+            <h3 data-template-id="project-1-title" class="font-bold text-lg"></h3>
+            <p data-template-id="project-1-result" class="text-sm mt-1"></p>
+          </div>
+        </div>
+        <div class="project-card relative fade-up" data-category="ecommerce">
+          <img data-template-id="project-2-img" class="w-full h-64 object-cover" loading="lazy">
+          <div class="overlay absolute inset-0 bg-gradient-to-t from-[rgba(10,10,12,0.9)] to-transparent flex flex-col justify-end p-6">
+            <span data-template-id="project-2-cat" class="text-xs text-[#2EE6FF] font-medium mb-1"></span>
+            <h3 data-template-id="project-2-title" class="font-bold text-lg"></h3>
+            <p data-template-id="project-2-result" class="text-sm mt-1"></p>
+          </div>
+        </div>
+        <div class="project-card relative fade-up" data-category="brand">
+          <img data-template-id="project-3-img" class="w-full h-64 object-cover" loading="lazy">
+          <div class="overlay absolute inset-0 bg-gradient-to-t from-[rgba(10,10,12,0.9)] to-transparent flex flex-col justify-end p-6">
+            <span data-template-id="project-3-cat" class="text-xs text-[#2EE6FF] font-medium mb-1"></span>
+            <h3 data-template-id="project-3-title" class="font-bold text-lg"></h3>
+            <p data-template-id="project-3-result" class="text-sm mt-1"></p>
+          </div>
+        </div>
+        <div class="project-card relative fade-up" data-category="web">
+          <img data-template-id="project-4-img" class="w-full h-64 object-cover" loading="lazy">
+          <div class="overlay absolute inset-0 bg-gradient-to-t from-[rgba(10,10,12,0.9)] to-transparent flex flex-col justify-end p-6">
+            <span data-template-id="project-4-cat" class="text-xs text-[#2EE6FF] font-medium mb-1"></span>
+            <h3 data-template-id="project-4-title" class="font-bold text-lg"></h3>
+            <p data-template-id="project-4-result" class="text-sm mt-1"></p>
+          </div>
+        </div>
+        <div class="project-card relative fade-up" data-category="mobile">
+          <img data-template-id="project-5-img" class="w-full h-64 object-cover" loading="lazy">
+          <div class="overlay absolute inset-0 bg-gradient-to-t from-[rgba(10,10,12,0.9)] to-transparent flex flex-col justify-end p-6">
+            <span data-template-id="project-5-cat" class="text-xs text-[#2EE6FF] font-medium mb-1"></span>
+            <h3 data-template-id="project-5-title" class="font-bold text-lg"></h3>
+            <p data-template-id="project-5-result" class="text-sm mt-1"></p>
+          </div>
+        </div>
+        <div class="project-card relative fade-up" data-category="ecommerce">
+          <img data-template-id="project-6-img" class="w-full h-64 object-cover" loading="lazy">
+          <div class="overlay absolute inset-0 bg-gradient-to-t from-[rgba(10,10,12,0.9)] to-transparent flex flex-col justify-end p-6">
+            <span data-template-id="project-6-cat" class="text-xs text-[#2EE6FF] font-medium mb-1"></span>
+            <h3 data-template-id="project-6-title" class="font-bold text-lg"></h3>
+            <p data-template-id="project-6-result" class="text-sm mt-1"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="py-16 border-y border-[rgba(255,255,255,0.06)]">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <div class="fade-up">
+        <p class="text-4xl font-bold text-[#2EE6FF]" data-count="120">0</p>
+        <p data-template-id="stat-1-label" class="text-sm mt-2"></p>
+      </div>
+      <div class="fade-up">
+        <p class="text-4xl font-bold text-[#2EE6FF]" data-count="95">0</p>
+        <p data-template-id="stat-2-label" class="text-sm mt-2"></p>
+      </div>
+      <div class="fade-up">
+        <p class="text-4xl font-bold text-[#2EE6FF]" data-count="12">0</p>
+        <p data-template-id="stat-3-label" class="text-sm mt-2"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-24 md:py-32 bg-[#111118]">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 data-template-id="cta-heading" class="section-heading mb-4 fade-up"></h2>
+      <p data-template-id="cta-body" class="text-[#9A9AA6] mb-8 fade-up"></p>
+      <a href="contact.html" data-template-id="cta-button" class="btn-primary inline-block fade-up"></a>
+    </div>
+  </section>
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-[rgba(255,255,255,0.06)] py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-col md:flex-row justify-between gap-8 mb-8">
+      <div>
+        <p data-template-id="footer-logo" class="font-bold text-lg mb-2"></p>
+        <p data-template-id="footer-tagline" class="text-sm text-[#9A9AA6]"></p>
+      </div>
+      <div class="flex gap-6 text-sm text-[#9A9AA6]">
+        <a href="index.html" data-template-id="footer-work" class="hover:text-white transition-colors"></a>
+        <a href="services.html" data-template-id="footer-services" class="hover:text-white transition-colors"></a>
+        <a href="about.html" data-template-id="footer-about" class="hover:text-white transition-colors"></a>
+        <a href="lab.html" data-template-id="footer-lab" class="hover:text-white transition-colors"></a>
+        <a href="contact.html" data-template-id="footer-contact" class="hover:text-white transition-colors"></a>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-[rgba(255,255,255,0.06)]">
+      <p data-template-id="footer-copyright" class="text-xs text-[#9A9AA6]"></p>
+      <a href="#hero" class="text-xs text-[#9A9AA6] hover:text-white transition-colors">Back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky Mobile CTA -->
+<div class="sticky-cta fixed bottom-0 left-0 w-full p-4 bg-[rgba(10,10,12,0.95)] border-t border-[rgba(255,255,255,0.06)] z-40" id="sticky-bar">
+  <a href="contact.html" data-template-id="sticky-cta" class="btn-primary block text-center w-full"></a>
+</div>
+
+<script>
+  // ============================================================
+  //  CONTENT – edit this object to change the page
+  // ============================================================
+  const pageContent = {
+    // Navigation
+    navLogo: 'Tech Kid',
+    navWork: 'Work',
+    navServices: 'Services',
+    navAbout: 'About',
+    navLab: 'Lab',
+    navContact: 'Contact',
+    navCta: 'Let\'s Talk',
+
+    // Mobile
+    mobileWork: 'Work',
+    mobileServices: 'Services',
+    mobileAbout: 'About',
+    mobileLab: 'Lab',
+    mobileContact: 'Contact',
+
+    // Hero
+    heroLabel: 'Our Portfolio',
+    heroHeading: 'Digital work that delivers',
+    heroSubheading: 'A selection of websites, brands, and platforms we’ve built for our clients.',
+
+    // Projects (6 items)
+    projects: [
+      { img: 'https://picsum.photos/seed/web1/600/400', cat: 'Web Development', title: 'Fintech Dashboard', result: 'Real‑time analytics platform for a leading investment firm.' },
+      { img: 'https://picsum.photos/seed/ecom1/600/400', cat: 'E-commerce', title: 'Artisan Market', result: 'Multi‑vendor marketplace for handmade goods.' },
+      { img: 'https://picsum.photos/seed/brand1/600/400', cat: 'Branding', title: 'EcoStart Rebrand', result: 'Complete brand identity for a sustainable energy startup.' },
+      { img: 'https://picsum.photos/seed/web2/600/400', cat: 'Web Development', title: 'HealthTrack App', result: 'Patient management system for a regional hospital network.' },
+      { img: 'https://picsum.photos/seed/mobile1/600/400', cat: 'Mobile', title: 'RideShare UX', result: 'Reimagined ride‑hailing experience with 40% faster booking.' },
+      { img: 'https://picsum.photos/seed/ecom2/600/400', cat: 'E-commerce', title: 'Fashion Boutique', result: 'Luxury online store with AR try‑on and subscription model.' }
+    ],
+
+    // Stats
+    stat1: 'Projects delivered',
+    stat2: 'Client satisfaction',
+    stat3: 'Industry awards',
+
+    // CTA Section
+    ctaHeading: 'Ready to start your project?',
+    ctaBody: 'Let’s talk about how we can bring your vision to life.',
+    ctaButton: 'Get in touch',
+
+    // Footer
+    footerLogo: 'Tech Kid',
+    footerTagline: 'Digital technology studio.',
+    footerWork: 'Work',
+    footerServices: 'Services',
+    footerAbout: 'About',
+    footerLab: 'Lab',
+    footerContact: 'Contact',
+    footerCopyright: '© 2026 Tech Kid. All rights reserved.',
+
+    // Sticky
+    stickyCta: 'Start a project'
+  };
+
+  // ============================================================
+  //  INJECTOR – do not edit below this line
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', function() {
+    const map = {
+      'nav-logo': pageContent.navLogo,
+      'nav-work': pageContent.navWork,
+      'nav-services': pageContent.navServices,
+      'nav-about': pageContent.navAbout,
+      'nav-lab': pageContent.navLab,
+      'nav-contact': pageContent.navContact,
+      'nav-cta': pageContent.navCta,
+      'mobile-work': pageContent.mobileWork,
+      'mobile-services': pageContent.mobileServices,
+      'mobile-about': pageContent.mobileAbout,
+      'mobile-lab': pageContent.mobileLab,
+      'mobile-contact': pageContent.mobileContact,
+      'hero-label': pageContent.heroLabel,
+      'hero-heading': pageContent.heroHeading,
+      'hero-subheading': pageContent.heroSubheading,
+      'stat-1-label': pageContent.stat1,
+      'stat-2-label': pageContent.stat2,
+      'stat-3-label': pageContent.stat3,
+      'cta-heading': pageContent.ctaHeading,
+      'cta-body': pageContent.ctaBody,
+      'cta-button': pageContent.ctaButton,
+      'footer-logo': pageContent.footerLogo,
+      'footer-tagline': pageContent.footerTagline,
+      'footer-work': pageContent.footerWork,
+      'footer-services': pageContent.footerServices,
+      'footer-about': pageContent.footerAbout,
+      'footer-lab': pageContent.footerLab,
+      'footer-contact': pageContent.footerContact,
+      'footer-copyright': pageContent.footerCopyright,
+      'sticky-cta': pageContent.stickyCta
+    };
+
+    Object.keys(map).forEach(id => {
+      const el = document.querySelector(`[data-template-id="${id}"]`);
+      if (el) el.innerHTML = map[id];
+    });
+
+    // Projects
+    const projMap = [
+      { img: 'project-1-img', cat: 'project-1-cat', title: 'project-1-title', result: 'project-1-result', idx: 0 },
+      { img: 'project-2-img', cat: 'project-2-cat', title: 'project-2-title', result: 'project-2-result', idx: 1 },
+      { img: 'project-3-img', cat: 'project-3-cat', title: 'project-3-title', result: 'project-3-result', idx: 2 },
+      { img: 'project-4-img', cat: 'project-4-cat', title: 'project-4-title', result: 'project-4-result', idx: 3 },
+      { img: 'project-5-img', cat: 'project-5-cat', title: 'project-5-title', result: 'project-5-result', idx: 4 },
+      { img: 'project-6-img', cat: 'project-6-cat', title: 'project-6-title', result: 'project-6-result', idx: 5 }
+    ];
+    projMap.forEach(({img, cat, title, result, idx}) => {
+      const imgEl = document.querySelector(`[data-template-id="${img}"]`);
+      if (imgEl) imgEl.src = pageContent.projects[idx].img;
+      const catEl = document.querySelector(`[data-template-id="${cat}"]`);
+      if (catEl) catEl.textContent = pageContent.projects[idx].cat;
+      const titleEl = document.querySelector(`[data-template-id="${title}"]`);
+      if (titleEl) titleEl.textContent = pageContent.projects[idx].title;
+      const resultEl = document.querySelector(`[data-template-id="${result}"]`);
+      if (resultEl) resultEl.textContent = pageContent.projects[idx].result;
+    });
+
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+  });
+</script>
+
+<!-- Interactive scripts -->
+<script>
+  // Mobile menu
+  const menuToggle = document.getElementById('menu-toggle'
