@@ -56,12 +56,15 @@
 <!-- Navigation -->
 <header class="nav-bar fixed top-0 left-0 w-full z-50">
   <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main navigation">
+    <!-- Logo points to home (index.html) -->
     <a href="index.html" data-template-id="nav-logo" class="text-lg font-bold tracking-tight text-white"></a>
     <div class="hidden md:flex items-center gap-8">
-      <a href="work.html" data-template-id="nav-work" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <!-- Work → index.html -->
+      <a href="index.html" data-template-id="nav-work" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
       <a href="services.html" data-template-id="nav-services" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
       <a href="about.html" data-template-id="nav-about" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
       <a href="lab.html" data-template-id="nav-lab" class="text-sm text-[#9A9AA6] hover:text-white transition-colors"></a>
+      <!-- Contact is active -->
       <a href="contact.html" data-template-id="nav-contact" class="text-sm text-white transition-colors border-b border-accent pb-1"></a>
     </div>
     <a href="contact.html" data-template-id="nav-cta" class="hidden md:inline-block btn-primary text-sm"></a>
@@ -76,7 +79,7 @@
   <button id="menu-close" class="absolute top-5 right-6 text-white p-2" aria-label="Close menu">
     <i data-lucide="x" style="width:28px;height:28px;"></i>
   </button>
-  <a href="work.html" data-template-id="mobile-work" class="text-2xl font-medium menu-link"></a>
+  <a href="index.html" data-template-id="mobile-work" class="text-2xl font-medium menu-link"></a>
   <a href="services.html" data-template-id="mobile-services" class="text-2xl font-medium menu-link"></a>
   <a href="about.html" data-template-id="mobile-about" class="text-2xl font-medium menu-link"></a>
   <a href="lab.html" data-template-id="mobile-lab" class="text-2xl font-medium menu-link"></a>
@@ -184,7 +187,7 @@
     </div>
   </section>
 
-  <!-- CTA Section (optional, but gives extra touch) -->
+  <!-- CTA Section -->
   <section class="py-16 md:py-24 bg-[#111118]">
     <div class="max-w-3xl mx-auto px-6 text-center">
       <h2 data-template-id="cta-heading" class="section-heading mb-4 fade-up"></h2>
@@ -203,7 +206,7 @@
         <p data-template-id="footer-tagline" class="text-sm text-[#9A9AA6]"></p>
       </div>
       <div class="flex gap-6 text-sm text-[#9A9AA6]">
-        <a href="work.html" data-template-id="footer-work" class="hover:text-white transition-colors"></a>
+        <a href="index.html" data-template-id="footer-work" class="hover:text-white transition-colors"></a>
         <a href="services.html" data-template-id="footer-services" class="hover:text-white transition-colors"></a>
         <a href="about.html" data-template-id="footer-about" class="hover:text-white transition-colors"></a>
         <a href="lab.html" data-template-id="footer-lab" class="hover:text-white transition-colors"></a>
@@ -217,7 +220,7 @@
   </div>
 </footer>
 
-<!-- Sticky Mobile CTA (hidden on contact page, but keep for consistency) -->
+<!-- Sticky Mobile CTA -->
 <div class="sticky-cta fixed bottom-0 left-0 w-full p-4 bg-[rgba(10,10,12,0.95)] border-t border-[rgba(255,255,255,0.06)] z-40" id="sticky-bar">
   <a href="contact.html" data-template-id="sticky-cta" class="btn-primary block text-center w-full"></a>
 </div>
@@ -347,12 +350,9 @@
       }
     });
 
-    // Set form action (update with your Formspree ID)
-    const form = document.getElementById('contact-form');
-    if (form) {
-      // You can also set the action dynamically from a config variable if you prefer.
-      // For now, it uses the default action; edit the HTML action attribute directly.
-    }
+    // Set form action – replace with your Formspree endpoint if needed
+    // The action is already set in the HTML; you can change it there or here.
+    // Example: document.getElementById('contact-form').action = 'https://formspree.io/f/your-id';
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
   });
@@ -367,48 +367,4 @@
   if(menuToggle && menuClose && mobileMenu) {
     menuToggle.addEventListener('click', () => { mobileMenu.classList.add('open'); mobileMenu.setAttribute('aria-hidden','false'); menuToggle.setAttribute('aria-expanded','true'); });
     menuClose.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); menuToggle.setAttribute('aria-expanded','false'); });
-    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileMenu.classList.remove('open'); mobileMenu.setAttribute('aria-hidden','true'); }));
-  }
-
-  // Smooth scroll
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if(t) t.scrollIntoView({behavior:'smooth'}); });
-  });
-
-  // Scroll reveals
-  const obs = new IntersectionObserver((entries) => { entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } }); }, {threshold:0.1});
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
-  // Form submission
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = form.querySelector('button[type="submit"]');
-      const originalText = btn.textContent;
-      btn.disabled = true; btn.textContent = 'Sending...';
-      try {
-        const res = await fetch(form.action, { method:'POST', body: new FormData(form), headers:{'Accept':'application/json'} });
-        if(res.ok) {
-          document.getElementById('form-success').classList.remove('hidden');
-          form.reset();
-        } else {
-          document.getElementById('form-error').classList.remove('hidden');
-        }
-      } catch {
-        document.getElementById('form-error').classList.remove('hidden');
-      }
-      btn.disabled = false; btn.textContent = originalText;
-    });
-  }
-
-  // Hide sticky bar when footer visible
-  const stickyBar = document.getElementById('sticky-bar');
-  const footerObs = new IntersectionObserver(([e]) => { if(stickyBar) stickyBar.style.display = e.isIntersecting ? 'none' : ''; }, {threshold:0.1});
-  const footer = document.querySelector('footer');
-  if(footer) footerObs.observe(footer);
-
-  if (typeof lucide !== 'undefined') lucide.createIcons();
-</script>
-</body>
-</html>
+    mobileMenu.querySelectorAll('a').forEach(a => a.ad
